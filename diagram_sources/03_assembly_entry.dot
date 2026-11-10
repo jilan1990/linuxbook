@@ -1,0 +1,16 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", fontname="Noto Sans CJK SC", fontsize=22, pad="0.35", nodesep="0.38", ranksep="0.50", splines=polyline, dpi=160, labelloc=t];
+node [shape=box, style="rounded,filled", color="#A9BDD0", fillcolor="#EDF4FB", fontname="Noto Sans CJK SC", fontcolor="#17334D", fontsize=17, penwidth=1.4, margin="0.20,0.14"];
+edge [color="#486B8A", arrowsize=0.8, penwidth=1.5, fontname="Noto Sans CJK SC", fontsize=13, fontcolor="#38566F"];
+
+label="图 1-3  汇编启动阶段逐步建立执行条件";
+a [label="primary_entry\n保存参数并处理入口异常级"];
+b [label="准备初始页表与 CPU\n__create_page_tables / __cpu_setup"];
+c [label="__primary_switch\n启用 MMU 并切换到后续执行地址"];
+d [label="__primary_switched\n准备初始栈与相关 C 执行状态"];
+e [label="start_kernel()\n开始通用 C 初始化",fillcolor="#E7F5EF"];
+a->b->c->d->e;
+note [shape=note,style=filled,label="阶段摘要：省略内部调用和配置分支\n图中尚未进入用户空间",fillcolor="#F1F3F5"];
+e->note [style=invis];
+
+}

@@ -1,0 +1,19 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 9 章  Image 入口区分指令与元数据";
+"head" [label="Image 头部",fillcolor="#EDF4FB"];
+"insn" [label="入口指令\n分支到 primary_entry",fillcolor="#EDF4FB"];
+"meta" [label="大小 标志 魔数\n以及可选 EFI 信息",fillcolor="#EDF4FB"];
+"entry" [label="primary_entry",fillcolor="#EDF4FB"];
+"save" [label="preserve_boot_args\n保存 x0～x3 与 DTB 地址",fillcolor="#EDF4FB"];
+"next" [label="异常级与页表准备",fillcolor="#E7F5EF"];
+"head"->"insn" [label="可执行部分"];
+"head"->"meta" [label="数据字段"];
+"insn"->"entry" [label="控制转移"];
+"entry"->"save" [label="先保护参数"];
+"save"->"next" [label="继续"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="分支跳过元数据，不能把整个头部当成连续指令。"];
+"next"->note [style=invis];
+}

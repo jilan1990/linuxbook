@@ -1,0 +1,21 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 15 章  设备树信息流向不同初始化对象";
+"dtb" [label="__fdt_pointer\n指向启动 DTB",fillcolor="#EDF4FB"];
+"scan" [label="早期映射 校验与扫描",fillcolor="#EDF4FB"];
+"memory" [label="memory 与保留区\n进入早期内存管理",fillcolor="#EDF4FB"];
+"chosen" [label="/chosen\n命令行 initrd 控制台",fillcolor="#EDF4FB"];
+"devices" [label="设备节点与 compatible",fillcolor="#EDF4FB"];
+"tree" [label="展开设备树\n后续设备与驱动模型",fillcolor="#EDF4FB"];
+"probe" [label="匹配与 probe\n建立实际设备能力",fillcolor="#E7F5EF"];
+"dtb"->"scan" [label="读取"];
+"scan"->"memory" [label="解析"];
+"scan"->"chosen" [label="解析"];
+"scan"->"devices" [label="识别"];
+"devices"->"tree" [label="对象化"];
+"tree"->"probe" [label="后续阶段"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="机器型号已识别，不代表所有设备驱动都已工作。"];
+"probe"->note [style=invis];
+}

@@ -1,0 +1,22 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 6 章  源码 配置与构建产物的证据链";
+"kconfig" [label="Kconfig\n选项与依赖",fillcolor="#EDF4FB"];
+"cfg" [label=".config\n有效选择",fillcolor="#EDF4FB"];
+"make" [label="Kbuild Makefile\n选择内建和模块对象",fillcolor="#EDF4FB"];
+"source" [label="C / .S 源码\n条件编译",fillcolor="#EDF4FB"];
+"headers" [label="生成头文件\n配置和结构偏移",fillcolor="#EDF4FB"];
+"obj" [label="目标文件\n符号与重定位",fillcolor="#EDF4FB"];
+"link" [label="链接结果\n可核对实际包含的符号",fillcolor="#E7F5EF"];
+"kconfig"->"cfg" [label="求解"];
+"cfg"->"make" [label="控制"];
+"cfg"->"headers" [label="生成"];
+"make"->"obj" [label="选择"];
+"source"->"obj" [label="编译"];
+"headers"->"obj" [label="参与编译"];
+"obj"->"link" [label="链接"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="选项请求值不一定等于 olddefconfig 之后的有效值。"];
+"link"->note [style=invis];
+}

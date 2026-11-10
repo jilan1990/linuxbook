@@ -1,0 +1,20 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 28 章  归档解包与真实根的两种路径";
+"archive" [label="内置或外部 CPIO 归档",fillcolor="#EDF4FB"];
+"rootfs" [label="populate_rootfs\n解包到早期 rootfs",fillcolor="#EDF4FB"];
+"check" [label="检查早期 init 路径",fillcolor="#EDF4FB"];
+"early" [label="保留早期命令\n后续尝试运行 /init",fillcolor="#EDF4FB"];
+"namespace" [label="prepare_namespace\n根据 root= 等准备真实根",fillcolor="#EDF4FB"];
+"exec" [label="kernel_init 收尾\n执行候选用户程序",fillcolor="#E7F5EF"];
+"archive"->"rootfs" [label="解包"];
+"rootfs"->"check" [label="文件出现后检查"];
+"check"->"early" [label="通过"];
+"check"->"namespace" [label="失败"];
+"early"->"exec" [label="继续"];
+"namespace"->"exec" [label="继续"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="传统块设备 initrd 与 CPIO initramfs 是不同机制。"];
+"exec"->note [style=invis];
+}

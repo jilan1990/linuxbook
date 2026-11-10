@@ -1,0 +1,19 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 12 章  启用 MMU 需要多项条件同时成立";
+"tables" [label="页表内存\n描述符与可见性",fillcolor="#EDF4FB"];
+"tcr" [label="TCR_EL1\n范围 粒度 遍历规则",fillcolor="#EDF4FB"];
+"mair" [label="MAIR_EL1\n内存属性编码",fillcolor="#EDF4FB"];
+"ttbr" [label="TTBR0 / TTBR1\n相应表基址",fillcolor="#EDF4FB"];
+"sctlr" [label="SCTLR_EL1 与同步\n启用地址转换",fillcolor="#EDF4FB"];
+"fetch" [label="按新规则继续取指\n过渡映射必须有效",fillcolor="#E7F5EF"];
+"tables"->"ttbr" [label="提供基址"];
+"tcr"->"sctlr" [label="规则先就绪"];
+"mair"->"sctlr" [label="属性先就绪"];
+"ttbr"->"sctlr" [label="表先可用"];
+"sctlr"->"fetch" [label="下一阶段执行"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="仅设置 M 位不足以保证系统继续执行。"];
+"fetch"->note [style=invis];
+}

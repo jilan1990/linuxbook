@@ -1,0 +1,20 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", fontname="Noto Sans CJK SC", fontsize=22, pad="0.35", nodesep="0.38", ranksep="0.50", splines=polyline, dpi=160, labelloc=t];
+node [shape=box, style="rounded,filled", color="#A9BDD0", fillcolor="#EDF4FB", fontname="Noto Sans CJK SC", fontcolor="#17334D", fontsize=17, penwidth=1.4, margin="0.20,0.14"];
+edge [color="#486B8A", arrowsize=0.8, penwidth=1.5, fontname="Noto Sans CJK SC", fontsize=13, fontcolor="#38566F"];
+
+label="图 1-5  内核如何在分配器初始化之前使用内存";
+a [label="镜像布局与早期映射\n已知的代码 数据 初始栈和页表"];
+b [label="memblock\n记录可用与保留区域\n提供早期内存分配"];
+c [label="伙伴系统\n接收可移交的空闲物理页"];
+d [label="SLUB\n在页资源基础上管理小对象"];
+e [label="内核子系统使用内存\n按各接口的阶段约束调用",fillcolor="#E7F5EF"];
+a->b [label="结合平台内存信息建立管理"];
+b->c [label="适当阶段移交可用页"];
+c->d [label="提供底层页资源"];
+c->e [label="页分配"];
+d->e [label="对象分配"];
+note [shape=note,label="概念依赖图：不表示 start_kernel 内逐行调用顺序\n保留区域不等于可立即交给伙伴系统的空闲页",fillcolor="#F1F3F5"];
+e->note [style=invis];
+
+}

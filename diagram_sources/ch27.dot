@@ -1,0 +1,22 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 27 章  VFS 对象与路径挂载视图";
+"path" [label="当前根视图中的 /init",fillcolor="#EDF4FB"];
+"mount" [label="挂载关系\n选择所在文件系统实例",fillcolor="#EDF4FB"];
+"dentry" [label="dentry\n目录项名称关系",fillcolor="#EDF4FB"];
+"inode" [label="inode\n文件元数据与操作",fillcolor="#EDF4FB"];
+"super" [label="superblock\n文件系统实例",fillcolor="#EDF4FB"];
+"file" [label="打开产生的 file\n访问状态与位置",fillcolor="#EDF4FB"];
+"exec" [label="执行加载路径\n继续检查格式与权限",fillcolor="#E7F5EF"];
+"path"->"mount" [label="按根与挂载解释"];
+"mount"->"super" [label="关联实例"];
+"path"->"dentry" [label="名称查找"];
+"dentry"->"inode" [label="指向对象"];
+"inode"->"super" [label="属于"];
+"inode"->"file" [label="打开"];
+"file"->"exec" [label="用于读取程序"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="宿主机存在 /init，不代表客户机能在自己的根中找到它。"];
+"exec"->note [style=invis];
+}

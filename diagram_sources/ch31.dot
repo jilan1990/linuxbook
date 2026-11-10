@@ -1,0 +1,21 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 31 章  最小 init 实验的输入与证据";
+"c" [label="minit.c\n检查 PID 与基本系统调用",fillcolor="#EDF4FB"];
+"gcc" [label="AArch64 静态链接",fillcolor="#EDF4FB"];
+"binary" [label="rootfs/init\n验证 ELF 与无 PT_INTERP",fillcolor="#EDF4FB"];
+"archive" [label="newc 归档\n含 /dev/console 5:1",fillcolor="#EDF4FB"];
+"kernel" [label="Image 与启动参数\nrdinit=/init",fillcolor="#EDF4FB"];
+"boot" [label="QEMU 启动\n内核解包并 exec",fillcolor="#EDF4FB"];
+"proof" [label="用户态输出 pid=1\nfork / wait / exec-test",fillcolor="#E7F5EF"];
+"c"->"gcc" [label="编译"];
+"gcc"->"binary" [label="生成"];
+"binary"->"archive" [label="打包"];
+"archive"->"boot" [label="-initrd"];
+"kernel"->"boot" [label="-kernel 与命令行"];
+"boot"->"proof" [label="运行结果"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="minit 的命令循环不是 POSIX Shell；BusyBox 作为可选实验。"];
+"proof"->note [style=invis];
+}

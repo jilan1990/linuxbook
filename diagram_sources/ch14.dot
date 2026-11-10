@@ -1,0 +1,21 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 14 章  start_kernel 中逐步增加的能力";
+"early" [label="初始任务与 CPU\n受控中断状态",fillcolor="#EDF4FB"];
+"arch" [label="setup_arch\n平台与内存信息",fillcolor="#EDF4FB"];
+"mm" [label="mm_init 等\n常规分配设施",fillcolor="#EDF4FB"];
+"sched" [label="sched_init\n调度核心结构",fillcolor="#EDF4FB"];
+"irq" [label="IRQ 与时间设施\n含多个交错初始化调用",fillcolor="#EDF4FB"];
+"enable" [label="允许本地 IRQ\n继续控制台及其他初始化",fillcolor="#EDF4FB"];
+"rest" [label="arch_call_rest_init\n转向任务创建",fillcolor="#E7F5EF"];
+"early"->"arch" [label="先后"];
+"arch"->"mm" [label="提供基础"];
+"mm"->"sched" [label="继续"];
+"sched"->"irq" [label="先建立调度基础"];
+"irq"->"enable" [label="达到启用条件"];
+"enable"->"rest" [label="完成其余准备"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="能力阶段摘要，不省略源码中其他函数的实际依赖。"];
+"rest"->note [style=invis];
+}

@@ -1,0 +1,22 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 21 章  读取时间与交付定时事件两条路径";
+"timer" [label="ARM 通用定时器体系",fillcolor="#EDF4FB"];
+"counter" [label="计数器读取",fillcolor="#EDF4FB"];
+"clocksource" [label="clocksource\n支撑经过时间计算",fillcolor="#EDF4FB"];
+"compare" [label="比较或到期条件",fillcolor="#EDF4FB"];
+"irq" [label="定时器 PPI\n经 IRQ 分发",fillcolor="#EDF4FB"];
+"clockevent" [label="clockevent\n触发已安排的事件",fillcolor="#EDF4FB"];
+"consumer" [label="时间保持 定时器与调度\n各自消费所需能力",fillcolor="#E7F5EF"];
+"timer"->"counter" [label="读取"];
+"counter"->"clocksource" [label="注册"];
+"timer"->"compare" [label="设置到期"];
+"compare"->"irq" [label="到期事件"];
+"irq"->"clockevent" [label="驱动处理"];
+"clocksource"->"consumer" [label="当前时间依据"];
+"clockevent"->"consumer" [label="到期通知"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="计数器递增不证明中断链正确；一次 tick 也不必切换任务。"];
+"consumer"->note [style=invis];
+}

@@ -1,0 +1,19 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 7 章  链接布局与两类镜像用途";
+"obj" [label="多个 .o\n含代码 数据 重定位",fillcolor="#EDF4FB"];
+"lds" [label="vmlinux.lds.S\n节顺序 对齐 边界符号",fillcolor="#EDF4FB"];
+"vmlinux" [label="vmlinux ELF\n链接地址与符号",fillcolor="#EDF4FB"];
+"image" [label="Image\nARM64 启动镜像",fillcolor="#EDF4FB"];
+"dbg" [label="GDB / objdump\n分析符号与指令",fillcolor="#EDF4FB"];
+"load" [label="前级装载到物理内存\n建立实际加载位置",fillcolor="#E7F5EF"];
+"obj"->"vmlinux" [label="链接"];
+"lds"->"vmlinux" [label="约束布局"];
+"vmlinux"->"image" [label="构建镜像"];
+"vmlinux"->"dbg" [label="提供分析信息"];
+"image"->"load" [label="加载"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="加载位置、链接地址、运行地址需要分别确认。"];
+"load"->note [style=invis];
+}

@@ -1,0 +1,24 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 11 章  4KB 页与 48 位 VA 的四级查表示例";
+"va" [label="VA 0x0000000040201234",fillcolor="#EDF4FB"];
+"l0" [label="L0 索引 0\n位 [47:39]",fillcolor="#EDF4FB"];
+"l1" [label="L1 索引 1\n位 [38:30]",fillcolor="#EDF4FB"];
+"l2" [label="L2 索引 1\n位 [29:21]",fillcolor="#EDF4FB"];
+"l3" [label="L3 索引 1\n位 [20:12]",fillcolor="#EDF4FB"];
+"page" [label="叶级映射物理页基址\n示例 0x80000000",fillcolor="#EDF4FB"];
+"offset" [label="页内偏移\n0x234",fillcolor="#EDF4FB"];
+"pa" [label="PA = 0x80000234",fillcolor="#E7F5EF"];
+"va"->"l0" [label="提取索引"];
+"l0"->"l1" [label="Table 描述符"];
+"l1"->"l2" [label="Table 描述符"];
+"l2"->"l3" [label="本例继续查表"];
+"l3"->"page" [label="Page 描述符"];
+"va"->"offset" [label="低 12 位"];
+"page"->"pa" [label="加偏移"];
+"offset"->"pa" [label="加偏移"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="纯计算示例；真实配置可能折叠级别或在中间级使用 Block。"];
+"pa"->note [style=invis];
+}

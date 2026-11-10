@@ -1,0 +1,19 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", fontname="Noto Sans CJK SC", fontsize=22, pad="0.35", nodesep="0.38", ranksep="0.50", splines=polyline, dpi=160, labelloc=t];
+node [shape=box, style="rounded,filled", color="#A9BDD0", fillcolor="#EDF4FB", fontname="Noto Sans CJK SC", fontcolor="#17334D", fontsize=17, penwidth=1.4, margin="0.20,0.14"];
+edge [color="#486B8A", arrowsize=0.8, penwidth=1.5, fontname="Noto Sans CJK SC", fontsize=13, fontcolor="#38566F"];
+
+label="图 1-7  早期 /init 决定后续准备路径";
+a [label="rootfs 可承载 initramfs 解包内容\n完成相关前置初始化"];
+b [shape=diamond,label="早期 init 路径\n可访问性检查通过？\n默认 /init，rdinit= 可修改",fillcolor="#FFF4DF"];
+c [label="保留 ramdisk_execute_command\n后续优先尝试执行该程序",fillcolor="#E7F5EF"];
+d [label="清除 ramdisk_execute_command\nprepare_namespace() 准备根文件系统"];
+e [label="返回 kernel_init()\n完成收尾并选择用户程序"];
+a->b;
+b->c [label="是"];
+b->d [label="否"];
+c->e;d->e;
+n [shape=note,label="检查通过 ≠ exec 一定成功\n文件格式 解释器与执行权限仍需验证",fillcolor="#F1F3F5"];
+e->n [style=invis];
+
+}

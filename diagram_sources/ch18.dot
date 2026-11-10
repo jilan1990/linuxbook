@@ -1,0 +1,21 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 18 章  页分配与对象分配的分工";
+"pages" [label="伙伴系统\n按 order 管理连续页",fillcolor="#EDF4FB"];
+"order" [label="order 3\n4KB 页时共 32KB",fillcolor="#EDF4FB"];
+"slub" [label="SLUB 对象缓存\n把页划分为对象",fillcolor="#EDF4FB"];
+"obj" [label="kmalloc / 缓存分配\n请求小对象",fillcolor="#EDF4FB"];
+"freeobj" [label="kfree / 缓存释放\n对象回到缓存",fillcolor="#EDF4FB"];
+"returnpage" [label="适当条件下整页回收",fillcolor="#E7F5EF"];
+"pages"->"order" [label="高阶分配例子"];
+"pages"->"slub" [label="提供页"];
+"slub"->"obj" [label="分配对象"];
+"obj"->"freeobj" [label="使用结束"];
+"freeobj"->"slub" [label="归还对象"];
+"slub"->"returnpage" [label="整页可回收"];
+"returnpage"->"pages" [label="归还页"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="释放一个对象不等于马上将整页返还伙伴系统。"];
+"returnpage"->note [style=invis];
+}

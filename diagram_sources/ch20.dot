@@ -1,0 +1,21 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 20 章  设备 IRQ 从硬件编号进入 Linux 分发";
+"dev" [label="设备中断源",fillcolor="#EDF4FB"];
+"gic" [label="GIC\n路由 优先级 CPU 接口",fillcolor="#EDF4FB"];
+"vector" [label="CPU IRQ 向量\n保存现场",fillcolor="#EDF4FB"];
+"entry" [label="handle_arch_irq\n指向 GIC 驱动回调",fillcolor="#EDF4FB"];
+"domain" [label="irq domain\nhwirq → Linux IRQ",fillcolor="#EDF4FB"];
+"desc" [label="irq_desc 与流控\n处理函数关系",fillcolor="#EDF4FB"];
+"action" [label="设备处理函数\n处理并配合应答结束",fillcolor="#E7F5EF"];
+"dev"->"gic" [label="发起事件"];
+"gic"->"vector" [label="可交付中断"];
+"vector"->"entry" [label="调用回调"];
+"entry"->"domain" [label="识别硬件编号"];
+"domain"->"desc" [label="映射定位"];
+"desc"->"action" [label="分发"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="设备树编码、硬件编号与 /proc/interrupts 编号不是同一表示。"];
+"action"->note [style=invis];
+}

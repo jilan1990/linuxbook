@@ -1,0 +1,26 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", fontname="Noto Sans CJK SC", fontsize=22, pad="0.35", nodesep="0.38", ranksep="0.50", splines=polyline, dpi=160, labelloc=t];
+node [shape=box, style="rounded,filled", color="#A9BDD0", fillcolor="#EDF4FB", fontname="Noto Sans CJK SC", fontcolor="#17334D", fontsize=17, penwidth=1.4, margin="0.20,0.14"];
+edge [color="#486B8A", arrowsize=0.8, penwidth=1.5, fontname="Noto Sans CJK SC", fontsize=13, fontcolor="#38566F"];
+
+label="图 1-4  同一物理位置可以有不同的访问地址";
+subgraph cluster_off {label="MMU 关闭  本图按 EL1 第一阶段转换说明";color="#A9BDD0";
+off [label="CPU 使用地址 P"];
+offram [label="RAM 中的物理位置 P",fillcolor="#FFF4DF"];
+off->offram [label="不经该阶段页表转换"];
+}
+subgraph cluster_on {label="MMU 开启  概念映射示意";color="#A9BDD0";
+identity [label="恒等映射中的 VA = P"];
+kernel [label="内核映射中的 VA = V\nV 与 P 数值通常不同"];
+pt [label="地址转换\n页表与权限属性"];
+ram [label="RAM 中的物理位置 P",fillcolor="#FFF4DF"];
+{rank=same;identity;kernel;}
+identity->pt [label="P → P"];
+kernel->pt [label="V → P"];
+pt->ram;
+}
+offram->identity [style=invis];
+note [shape=note,label="两种映射的覆盖范围与生存期不同\n图中 P 和 V 是符号，不是固定平台地址",fillcolor="#F1F3F5"];
+ram->note [style=invis];
+
+}

@@ -1,0 +1,22 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 26 章  initcall 从登记到执行再到回收";
+"fn" [label="初始化函数",fillcolor="#EDF4FB"];
+"macro" [label="initcall 宏\n把函数地址放入指定节",fillcolor="#EDF4FB"];
+"link" [label="链接脚本收集\n形成各等级范围",fillcolor="#EDF4FB"];
+"loop" [label="do_initcalls\n按范围遍历并调用",fillcolor="#EDF4FB"];
+"async" [label="相关异步工作\n可能在函数返回后继续",fillcolor="#EDF4FB"];
+"wait" [label="kernel_init 等待完成",fillcolor="#EDF4FB"];
+"free" [label="释放初始化内存\n持久引用不得悬空",fillcolor="#E7F5EF"];
+"fn"->"macro" [label="登记"];
+"macro"->"link" [label="链接"];
+"link"->"loop" [label="提供边界"];
+"loop"->"async" [label="可能发起"];
+"loop"->"wait" [label="初始化函数返回"];
+"async"->"wait" [label="等待相关完成"];
+"wait"->"free" [label="满足回收条件"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="等级顺序不等于完备的设备依赖求解。"];
+"free"->note [style=invis];
+}

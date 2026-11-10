@@ -1,0 +1,25 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 13 章  进入 C 之前的状态汇合";
+"switch" [label="__primary_switch\nMMU 与可选重定位处理",fillcolor="#EDF4FB"];
+"stack" [label="初始栈\ninit_thread_union",fillcolor="#EDF4FB"];
+"task" [label="当前任务关联\ninit_task 与 SP_EL0 用途",fillcolor="#EDF4FB"];
+"vectors" [label="异常入口\nVBAR_EL1 指向 vectors",fillcolor="#EDF4FB"];
+"bss" [label="BSS 清零\n建立静态零初始化条件",fillcolor="#EDF4FB"];
+"args" [label="保存 FDT 与镜像偏移",fillcolor="#EDF4FB"];
+"c" [label="start_kernel()\n通用 C 初始化",fillcolor="#E7F5EF"];
+"switch"->"stack" [label="进入切换后路径"];
+"switch"->"task" [label="准备"];
+"switch"->"vectors" [label="准备"];
+"switch"->"bss" [label="准备"];
+"switch"->"args" [label="准备"];
+"stack"->"c" [label="栈有效"];
+"task"->"c" [label="身份可定位"];
+"vectors"->"c" [label="异常入口"];
+"bss"->"c" [label="数据条件"];
+"args"->"c" [label="启动信息"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="图为前置条件汇合，不表示这些准备在硬件上并行执行。"];
+"c"->note [style=invis];
+}

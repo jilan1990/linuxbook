@@ -1,0 +1,22 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", fontname="Noto Sans CJK SC", fontsize=22, pad="0.35", nodesep="0.38", ranksep="0.50", splines=polyline, dpi=160, labelloc=t];
+node [shape=box, style="rounded,filled", color="#A9BDD0", fillcolor="#EDF4FB", fontname="Noto Sans CJK SC", fontcolor="#17334D", fontsize=17, penwidth=1.4, margin="0.20,0.14"];
+edge [color="#486B8A", arrowsize=0.8, penwidth=1.5, fontname="Noto Sans CJK SC", fontsize=13, fontcolor="#38566F"];
+
+label="图 1-8  exec 更换程序映像，PID 1 延续";
+subgraph cluster_pid {label="同一个 PID 1";color="#80B79D";penwidth=2;style=rounded;
+subgraph cluster_kernel {label="内核执行阶段  本书基线 EL1";color="#A9BDD0";
+a [label="kernel_init()\n继续完成启动初始化"];
+b [label="run_init_process()\n进入 kernel_execve() 路径"];
+c [label="加载 ELF 并建立用户地址空间\n准备用户栈与寄存器现场"];
+a->b->c;
+}
+subgraph cluster_user {label="用户执行阶段  EL0";color="#80B79D";
+d [label="ELF 入口  通常是 _start",fillcolor="#E7F5EF"];
+e [label="运行库初始化后进入 main()\n或由程序自行实现入口逻辑",fillcolor="#E7F5EF"];
+d->e;
+}
+c->d [label="成功 exec 后沿架构返回路径进入 EL0\n不是从内核直接普通调用用户 main",color="#208763"];
+}
+
+}

@@ -1,0 +1,19 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 3 章  从链表成员反推外层对象";
+"base" [label="外层 item 对象地址 B",fillcolor="#EDF4FB"];
+"value" [label="value 成员\n位于 B 的相应偏移",fillcolor="#EDF4FB"];
+"node" [label="node 成员地址 M\nM = B + offsetof(item, node)",fillcolor="#EDF4FB"];
+"list" [label="通用链表操作\n只持有 node 指针",fillcolor="#EDF4FB"];
+"recover" [label="container_of 的地址关系\nB = M − 成员偏移",fillcolor="#EDF4FB"];
+"valid" [label="前提\n成员确属该类型的有效对象",fillcolor="#E7F5EF"];
+"base"->"value" [label="包含"];
+"base"->"node" [label="包含"];
+"list"->"node" [label="引用"];
+"node"->"recover" [label="反推"];
+"valid"->"recover" [label="约束"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="强制转换不创造对象；类型与生命周期必须正确。"];
+"valid"->note [style=invis];
+}

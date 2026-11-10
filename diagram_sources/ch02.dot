@@ -1,0 +1,22 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 2 章  主机工具与 ARM64 客户机的边界";
+"src" [label="Linux v5.10\n源码与 .config",fillcolor="#EDF4FB"];
+"cc" [label="交叉编译器\n生成 AArch64 指令",fillcolor="#EDF4FB"];
+"elf" [label="vmlinux\n符号与调试信息",fillcolor="#EDF4FB"];
+"image" [label="Image\n可启动镜像",fillcolor="#EDF4FB"];
+"ramfs" [label="initramfs\n用户程序与文件",fillcolor="#EDF4FB"];
+"qemu" [label="QEMU virt\nARM64 客户机",fillcolor="#EDF4FB"];
+"gdb" [label="主机 GDB\n远程观察 CPU",fillcolor="#E7F5EF"];
+"src"->"cc" [label="构建"];
+"cc"->"elf" [label="链接"];
+"cc"->"image" [label="生成"];
+"image"->"qemu" [label="-kernel"];
+"ramfs"->"qemu" [label="-initrd"];
+"elf"->"gdb" [label="装入符号"];
+"gdb"->"qemu" [label="远程调试"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="WSL2 是开发环境；客户机内核才是被研究对象。"];
+"gdb"->note [style=invis];
+}

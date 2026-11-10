@@ -1,0 +1,22 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 30 章  ELF 主程序 解释器与初始用户栈";
+"elf" [label="目标 ELF\n头与程序头",fillcolor="#EDF4FB"];
+"load" [label="PT_LOAD\n建立用户映射与权限",fillcolor="#EDF4FB"];
+"interp" [label="可选 PT_INTERP\n动态解释器",fillcolor="#EDF4FB"];
+"stack" [label="用户栈\nargc argv envp auxv",fillcolor="#EDF4FB"];
+"regs" [label="start_thread\n设置 PC SP EL0 状态",fillcolor="#EDF4FB"];
+"return" [label="架构返回路径\n最终进入 EL0",fillcolor="#EDF4FB"];
+"runtime" [label="静态程序入口或解释器入口\n后续才可能到 main",fillcolor="#E7F5EF"];
+"elf"->"load" [label="校验后装载"];
+"elf"->"interp" [label="若存在"];
+"load"->"regs" [label="用户空间就绪"];
+"interp"->"regs" [label="影响初始 PC"];
+"stack"->"regs" [label="提供初始 SP"];
+"regs"->"return" [label="准备现场"];
+"return"->"runtime" [label="恢复并进入用户态"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="设置 pt_regs 不等于在 start_thread 内当场切换到 EL0。"];
+"runtime"->note [style=invis];
+}

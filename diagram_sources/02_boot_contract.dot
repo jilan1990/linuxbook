@@ -1,0 +1,25 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", fontname="Noto Sans CJK SC", fontsize=22, pad="0.35", nodesep="0.38", ranksep="0.50", splines=polyline, dpi=160, labelloc=t];
+node [shape=box, style="rounded,filled", color="#A9BDD0", fillcolor="#EDF4FB", fontname="Noto Sans CJK SC", fontcolor="#17334D", fontsize=17, penwidth=1.4, margin="0.20,0.14"];
+edge [color="#486B8A", arrowsize=0.8, penwidth=1.5, fontname="Noto Sans CJK SC", fontsize=13, fontcolor="#38566F"];
+
+label="图 1-2  ARM64 直接启动路径的交接契约";
+subgraph cluster_cpu {label="CPU 入口状态";color="#A9BDD0";style=rounded;
+x0 [label="x0\nDTB 的物理地址"];
+x1 [label="x1 / x2 / x3\n按协议置零"];
+state [label="MMU 关闭\n其余状态满足启动协议"];
+{rank=same;x0;x1;state;}
+}
+subgraph cluster_ram {label="RAM 中的启动材料  位置关系不按比例";color="#A9BDD0";style=rounded;
+dtb [label="DTB\n内存与设备描述",fillcolor="#FFF4DF"];
+image [label="Image\n内核指令与数据"];
+archive [label="可选 initramfs 归档\n可包含用户程序 /init",fillcolor="#E7F5EF"];
+{rank=same;dtb;image;archive;}
+}
+entry [label="Image 入口 → primary_entry\n先保存参数，再建立早期环境"];
+x0->dtb [label="指向",color="#B88724"];
+state->entry [label="入口前置条件"];
+image->entry [label="从镜像入口取指"];
+dtb->entry [style=dashed,label="后续阶段解析"];
+
+}

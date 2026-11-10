@@ -1,0 +1,19 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 16 章  已知 RAM 与可分配区间的差别";
+"ram" [label="memblock.memory\n已知物理内存范围",fillcolor="#EDF4FB"];
+"reserved" [label="memblock.reserved\n镜像 DTB 其他占用",fillcolor="#EDF4FB"];
+"free" [label="在允许范围内求差集\n并满足对齐与地址限制",fillcolor="#EDF4FB"];
+"alloc" [label="一次早期分配",fillcolor="#EDF4FB"];
+"protect" [label="把新占用加入保留范围",fillcolor="#EDF4FB"];
+"handoff" [label="后续将符合条件的空闲页\n移交伙伴系统",fillcolor="#E7F5EF"];
+"ram"->"free" [label="提供范围"];
+"reserved"->"free" [label="排除占用"];
+"free"->"alloc" [label="找到候选"];
+"alloc"->"protect" [label="更新保留状态"];
+"free"->"handoff" [label="合适阶段释放"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="保留与映射是两个维度；属于 RAM 不代表立即可分配。"];
+"handoff"->note [style=invis];
+}

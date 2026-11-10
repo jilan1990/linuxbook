@@ -1,0 +1,22 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 25 章  新任务第一次运行的上下文构造";
+"request" [label="kernel_thread\n指定函数与参数",fillcolor="#EDF4FB"];
+"clone" [label="kernel_clone / copy_process\n建立任务与资源",fillcolor="#EDF4FB"];
+"copy" [label="ARM64 copy_thread",fillcolor="#EDF4FB"];
+"x19" [label="保存 x19 = 入口函数\nx20 = 参数",fillcolor="#EDF4FB"];
+"pc" [label="保存 PC = ret_from_fork\nSP 指向新任务现场",fillcolor="#EDF4FB"];
+"restore" [label="调度恢复新任务上下文",fillcolor="#EDF4FB"];
+"start" [label="ret_from_fork\nschedule_tail 后调用 x19",fillcolor="#E7F5EF"];
+"request"->"clone" [label="创建",style=dashed];
+"clone"->"copy" [label="架构构造"];
+"copy"->"x19" [label="准备"];
+"copy"->"pc" [label="准备"];
+"x19"->"restore" [label="待恢复状态"];
+"pc"->"restore" [label="待恢复状态"];
+"restore"->"start" [label="首次获得 CPU"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="构造一个未来能运行的上下文，不是当前栈上立即调用入口。"];
+"start"->note [style=invis];
+}

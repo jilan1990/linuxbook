@@ -1,0 +1,26 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", fontname="Noto Sans CJK SC", fontsize=22, pad="0.35", nodesep="0.38", ranksep="0.50", splines=polyline, dpi=160, labelloc=t];
+node [shape=box, style="rounded,filled", color="#A9BDD0", fillcolor="#EDF4FB", fontname="Noto Sans CJK SC", fontcolor="#17334D", fontsize=17, penwidth=1.4, margin="0.20,0.14"];
+edge [color="#486B8A", arrowsize=0.8, penwidth=1.5, fontname="Noto Sans CJK SC", fontsize=13, fontcolor="#38566F"];
+
+label="图 1-6  创建任务与任务开始运行是不同事件";
+subgraph cluster_boot {label="启动任务  boot CPU";color="#A9BDD0";
+a [label="rest_init()"];
+b [label="先创建 PID 1"];
+c [label="再创建 kthreadd  PID 2"];
+d [label="发布 kthreadd_task\ncomplete(kthreadd_done)"];
+e [label="执行调度并进入 idle"];
+a->b->c->d->e;
+}
+subgraph cluster_init {label="PID 1  获得调度机会后";color="#80B79D";
+f [label="kernel_init()",fillcolor="#E7F5EF"];
+g [label="kernel_init_freeable()\n等待 kthreadd_done",fillcolor="#E7F5EF"];
+h [label="条件满足后继续初始化",fillcolor="#E7F5EF"];
+f->g->h;
+}
+k [label="PID 2  kthreadd\n就绪任务由调度器安排执行",fillcolor="#FFF4DF"];
+b->f [label="建立新任务  非普通调用",style=dashed,color="#208763"];
+c->k [label="建立新任务",style=dashed,color="#B88724"];
+d->h [label="满足等待条件",style=dotted,color="#208763",penwidth=2];
+
+}

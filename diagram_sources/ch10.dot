@@ -1,0 +1,23 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 10 章  el2_setup 的入口分支";
+"current" [label="读取 CurrentEL",fillcolor="#EDF4FB"];
+"el1" [label="从 EL1 进入\n设置相应控制状态",fillcolor="#EDF4FB"];
+"el2" [label="从 EL2 进入\n处理 HCR 定时器与接口权限",fillcolor="#EDF4FB"];
+"check" [label="硬件与配置是否采用 VHE",fillcolor="#EDF4FB"];
+"nvhe" [label="非 VHE 路径\n准备返回状态并 eret 到 EL1",fillcolor="#EDF4FB"];
+"vhe" [label="VHE 路径\n可保持相应 EL2 主机环境",fillcolor="#EDF4FB"];
+"continue" [label="记录启动模式\n继续后续 CPU 设置",fillcolor="#E7F5EF"];
+"current"->"el1" [label="EL1"];
+"current"->"el2" [label="EL2"];
+"el2"->"check" [label="特性判断"];
+"check"->"nvhe" [label="否"];
+"check"->"vhe" [label="是"];
+"el1"->"continue" [label="返回"];
+"nvhe"->"continue" [label="继续"];
+"vhe"->"continue" [label="继续"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="本书基础实验使用 EL1；不能说所有路径都降到 EL1。"];
+"continue"->note [style=invis];
+}

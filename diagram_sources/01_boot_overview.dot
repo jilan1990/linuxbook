@@ -1,0 +1,23 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", fontname="Noto Sans CJK SC", fontsize=22, pad="0.35", nodesep="0.38", ranksep="0.50", splines=polyline, dpi=160, labelloc=t];
+node [shape=box, style="rounded,filled", color="#A9BDD0", fillcolor="#EDF4FB", fontname="Noto Sans CJK SC", fontcolor="#17334D", fontsize=17, penwidth=1.4, margin="0.20,0.14"];
+edge [color="#486B8A", arrowsize=0.8, penwidth=1.5, fontname="Noto Sans CJK SC", fontsize=13, fontcolor="#38566F"];
+
+label="图 1-1  从内核接管 CPU 到用户态 init";
+a [label="前级软件\n准备 Image 与 DTB"];
+b [label="ARM64 汇编启动\n参数 · 页表 · CPU · 初始栈"];
+c [label="start_kernel()\n初始化通用内核基础设施"];
+d [label="arch_call_rest_init()\n默认进入 rest_init()"];
+e [label="启动 CPU 的原有任务\n调度后进入 idle", fillcolor="#F1F3F5"];
+f [label="PID 1  kernel_init()\n后续初始化与程序加载",fillcolor="#E7F5EF",color="#80B79D"];
+g [label="PID 2  kthreadd\n服务后续内核线程创建",fillcolor="#FFF4DF",color="#CEAD71"];
+h [label="PID 1  用户程序\nELF 入口 → 用户初始化",fillcolor="#E7F5EF",color="#80B79D"];
+a->b [label="按启动协议移交控制"];
+b->c [label="进入 C 初始化"];
+c->d [label="调用"];
+d->e [label="原任务继续"];
+d->f [label="创建任务后由调度器安排执行",style=dashed,color="#208763"];
+d->g [label="创建任务后由调度器安排执行",style=dashed,color="#B88724"];
+f->h [label="成功 exec 后进入用户态",color="#208763"];
+
+}

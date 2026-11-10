@@ -1,0 +1,20 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 5 章  地址转换 状态与异常入口各有职责";
+"cpu" [label="CPU 当前执行状态",fillcolor="#EDF4FB"];
+"el" [label="异常级 EL0 / EL1 / EL2\n决定权限与寄存器环境",fillcolor="#EDF4FB"];
+"mmu" [label="MMU 与页表\n转换地址并检查属性权限",fillcolor="#EDF4FB"];
+"tlb" [label="TLB\n缓存转换结果",fillcolor="#EDF4FB"];
+"cache" [label="指令与数据 Cache\n缓存内容",fillcolor="#EDF4FB"];
+"vector" [label="异常向量\n处理同步异常 IRQ 等",fillcolor="#E7F5EF"];
+"cpu"->"el" [label="运行环境"];
+"cpu"->"mmu" [label="访存"];
+"mmu"->"tlb" [label="使用转换缓存"];
+"cpu"->"cache" [label="取指与读写"];
+"cpu"->"vector" [label="发生异常"];
+"el"->"vector" [label="决定入口规则"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="修改映射、维护 Cache、切换异常级是不同操作。"];
+"vector"->note [style=invis];
+}

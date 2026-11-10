@@ -1,0 +1,4 @@
+Native x86_64 smoke check only; not an ARM64 guest boot.
+pid=18 ppid=2
+child before exec pid=19 ppid=18
+parent reaped pid=19 exit=7

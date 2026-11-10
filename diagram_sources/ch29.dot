@@ -1,0 +1,24 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 29 章  v5.10 的 init 候选与失败处理";
+"early" [label="有效早期命令\n默认 /init",fillcolor="#EDF4FB"];
+"explicit" [label="init= 指定命令\n若存在才尝试",fillcolor="#EDF4FB"];
+"panic" [label="显式 init 执行失败\npanic",fillcolor="#EDF4FB"];
+"default" [label="非空 CONFIG_DEFAULT_INIT\n若配置才尝试",fillcolor="#EDF4FB"];
+"paths" [label="默认候选\n/sbin/init → /etc/init\n→ /bin/init → /bin/sh",fillcolor="#EDF4FB"];
+"success" [label="任一成功\nPID 1 安装用户程序",fillcolor="#EDF4FB"];
+"allfail" [label="候选全部失败\nNo working init found",fillcolor="#E7F5EF"];
+"early"->"success" [label="执行成功"];
+"early"->"explicit" [label="未采用或执行失败"];
+"explicit"->"success" [label="指定且成功"];
+"explicit"->"panic" [label="指定但失败"];
+"explicit"->"default" [label="没有显式 init="];
+"default"->"success" [label="成功"];
+"default"->"paths" [label="未配置或失败"];
+"paths"->"success" [label="某个成功"];
+"paths"->"allfail" [label="均失败"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="rdinit= 与 init= 不是别名，成功的早期命令优先。"];
+"allfail"->note [style=invis];
+}

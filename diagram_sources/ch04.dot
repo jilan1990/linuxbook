@@ -1,0 +1,20 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 4 章  调用与栈保存的配合";
+"caller" [label="调用者\n准备 x0 / x1 等参数",fillcolor="#EDF4FB"];
+"bl" [label="bl 目标\nx30 获得返回位置",fillcolor="#EDF4FB"];
+"callee" [label="被调用者\n按约定保护需保留状态",fillcolor="#EDF4FB"];
+"stack" [label="若再发起调用\n先保存自身返回位置",fillcolor="#EDF4FB"];
+"result" [label="计算结果放入 x0",fillcolor="#EDF4FB"];
+"ret" [label="恢复返回位置\nret 继续调用者",fillcolor="#E7F5EF"];
+"caller"->"bl" [label="调用"];
+"bl"->"callee" [label="进入"];
+"callee"->"stack" [label="有嵌套调用时"];
+"callee"->"result" [label="无嵌套也可完成"];
+"stack"->"result" [label="执行函数体"];
+"result"->"ret" [label="返回"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="bl 不自动压入完整栈帧，也不保存全部寄存器。"];
+"ret"->note [style=invis];
+}

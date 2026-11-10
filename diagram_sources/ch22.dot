@@ -1,0 +1,21 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 22 章  两个任务的内核栈与保存上下文";
+"a" [label="任务 A\n自己的 task_struct",fillcolor="#EDF4FB"];
+"astack" [label="A 内核栈与 cpu_context\n保存 SP 和续执行位置",fillcolor="#EDF4FB"];
+"schedule" [label="调度器选择下一任务",fillcolor="#EDF4FB"];
+"switch" [label="context_switch\n架构状态与 cpu_switch_to",fillcolor="#EDF4FB"];
+"b" [label="任务 B\n自己的 task_struct",fillcolor="#EDF4FB"];
+"bstack" [label="B 内核栈与 cpu_context\n恢复后继续自己的调用链",fillcolor="#E7F5EF"];
+"a"->"astack" [label="关联"];
+"astack"->"schedule" [label="发起或进入调度"];
+"schedule"->"switch" [label="若需跨任务切换"];
+"b"->"bstack" [label="关联"];
+"switch"->"astack" [label="保存 A"];
+"bstack"->"switch" [label="读取 B 的保存状态"];
+"switch"->"b" [label="B 获得 CPU"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="任务切换保存上下文与一次异常形成 pt_regs 有不同职责。"];
+"bstack"->note [style=invis];
+}

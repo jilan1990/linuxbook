@@ -1,0 +1,403 @@
+{
+  "1": {
+    "title": "Linux 启动全景",
+    "paths": [
+      "arch/arm64/kernel/head.S",
+      "init/main.c",
+      "init/init_task.c",
+      "fs/exec.c"
+    ],
+    "symbols": [
+      "primary_entry",
+      "start_kernel",
+      "kernel_init",
+      "kernel_execve"
+    ]
+  },
+  "2": {
+    "title": "搭建能够重复验证的实验环境",
+    "paths": [
+      "Makefile",
+      "Documentation/arm64/booting.rst"
+    ],
+    "symbols": [
+      "VERSION",
+      "PATCHLEVEL"
+    ]
+  },
+  "3": {
+    "title": "阅读内核必需的 C 语言",
+    "paths": [
+      "include/linux/init.h",
+      "init/main.c"
+    ],
+    "symbols": [
+      "__init",
+      "initcall_t"
+    ]
+  },
+  "4": {
+    "title": "AArch64 汇编入门",
+    "paths": [
+      "arch/arm64/kernel/head.S",
+      "arch/arm64/kernel/entry.S"
+    ],
+    "symbols": [
+      "preserve_boot_args",
+      "cpu_switch_to"
+    ]
+  },
+  "5": {
+    "title": "ARM64 系统架构基础",
+    "paths": [
+      "arch/arm64/mm/proc.S",
+      "arch/arm64/kernel/entry.S"
+    ],
+    "symbols": [
+      "__cpu_setup",
+      "vectors"
+    ]
+  },
+  "6": {
+    "title": "源码目录 Kconfig 与 Kbuild",
+    "paths": [
+      "arch/arm64/Makefile",
+      "scripts/Makefile.build",
+      "arch/arm64/Kconfig"
+    ],
+    "symbols": [
+      "obj-y",
+      "ARM64_4K_PAGES"
+    ]
+  },
+  "7": {
+    "title": "从目标文件到 vmlinux",
+    "paths": [
+      "arch/arm64/kernel/vmlinux.lds.S",
+      "include/asm-generic/vmlinux.lds.h",
+      "arch/arm64/include/asm/memory.h"
+    ],
+    "symbols": [
+      "__bss_start",
+      "KIMAGE_VADDR"
+    ]
+  },
+  "8": {
+    "title": "Bootloader 与内核的交接契约",
+    "paths": [
+      "Documentation/arm64/booting.rst",
+      "arch/arm64/kernel/head.S"
+    ],
+    "symbols": [
+      "primary_entry",
+      "el2_setup"
+    ]
+  },
+  "9": {
+    "title": "镜像头与启动入口",
+    "paths": [
+      "arch/arm64/kernel/head.S"
+    ],
+    "symbols": [
+      "primary_entry",
+      "preserve_boot_args"
+    ]
+  },
+  "10": {
+    "title": "异常级与 CPU 初始状态",
+    "paths": [
+      "arch/arm64/kernel/head.S"
+    ],
+    "symbols": [
+      "el2_setup",
+      "HCR_EL2",
+      "hcr_el2"
+    ]
+  },
+  "11": {
+    "title": "构造最初的页表",
+    "paths": [
+      "arch/arm64/kernel/head.S",
+      "arch/arm64/include/asm/pgtable-hwdef.h"
+    ],
+    "symbols": [
+      "__create_page_tables",
+      "idmap_pg_dir",
+      "init_pg_dir"
+    ]
+  },
+  "12": {
+    "title": "初始化 CPU 并打开 MMU",
+    "paths": [
+      "arch/arm64/mm/proc.S",
+      "arch/arm64/kernel/head.S"
+    ],
+    "symbols": [
+      "__cpu_setup",
+      "__enable_mmu"
+    ]
+  },
+  "13": {
+    "title": "从汇编进入 start_kernel",
+    "paths": [
+      "arch/arm64/kernel/head.S",
+      "arch/arm64/include/asm/thread_info.h"
+    ],
+    "symbols": [
+      "__primary_switch",
+      "__primary_switched",
+      "sp_el0"
+    ]
+  },
+  "14": {
+    "title": "start_kernel 的初始化顺序",
+    "paths": [
+      "init/main.c"
+    ],
+    "symbols": [
+      "start_kernel",
+      "mm_init",
+      "arch_call_rest_init"
+    ]
+  },
+  "15": {
+    "title": "setup_arch 与平台识别",
+    "paths": [
+      "arch/arm64/kernel/setup.c",
+      "drivers/of/fdt.c"
+    ],
+    "symbols": [
+      "setup_arch",
+      "setup_machine_fdt",
+      "early_init_dt_scan_nodes"
+    ]
+  },
+  "16": {
+    "title": "memblock 与早期内存分配",
+    "paths": [
+      "mm/memblock.c",
+      "arch/arm64/mm/init.c"
+    ],
+    "symbols": [
+      "memblock_add",
+      "memblock_reserve",
+      "memblock_free_all",
+      "bootmem_init"
+    ]
+  },
+  "17": {
+    "title": "建立正式的内核地址空间",
+    "paths": [
+      "arch/arm64/mm/mmu.c",
+      "Documentation/arm64/memory.rst"
+    ],
+    "symbols": [
+      "paging_init",
+      "map_mem",
+      "map_kernel"
+    ]
+  },
+  "18": {
+    "title": "伙伴系统与 SLUB",
+    "paths": [
+      "mm/page_alloc.c",
+      "mm/slub.c",
+      "mm/slab_common.c"
+    ],
+    "symbols": [
+      "__alloc_pages_nodemask",
+      "kmem_cache_init",
+      "kmalloc"
+    ]
+  },
+  "19": {
+    "title": "异常向量与异常现场",
+    "paths": [
+      "arch/arm64/kernel/entry.S"
+    ],
+    "symbols": [
+      "vectors",
+      "kernel_entry",
+      "kernel_exit",
+      "el1_irq"
+    ]
+  },
+  "20": {
+    "title": "中断子系统与 GIC",
+    "paths": [
+      "arch/arm64/kernel/irq.c",
+      "drivers/irqchip/irq-gic-v3.c",
+      "include/linux/irqdomain.h"
+    ],
+    "symbols": [
+      "init_IRQ",
+      "gic_handle_irq",
+      "handle_domain_irq"
+    ]
+  },
+  "21": {
+    "title": "时间子系统与通用定时器",
+    "paths": [
+      "arch/arm64/kernel/time.c",
+      "drivers/clocksource/arm_arch_timer.c"
+    ],
+    "symbols": [
+      "time_init",
+      "arch_timer_of_init",
+      "arch_timer_handler"
+    ]
+  },
+  "22": {
+    "title": "调度器初始化与第一个任务",
+    "paths": [
+      "init/init_task.c",
+      "kernel/sched/core.c",
+      "arch/arm64/kernel/process.c",
+      "arch/arm64/kernel/entry.S"
+    ],
+    "symbols": [
+      "init_task",
+      "sched_init",
+      "context_switch",
+      "cpu_switch_to"
+    ]
+  },
+  "23": {
+    "title": "启动其他 CPU",
+    "paths": [
+      "arch/arm64/kernel/smp.c",
+      "arch/arm64/kernel/head.S",
+      "drivers/firmware/psci/psci.c"
+    ],
+    "symbols": [
+      "__cpu_up",
+      "boot_secondary",
+      "secondary_start_kernel",
+      "secondary_entry"
+    ]
+  },
+  "24": {
+    "title": "rest_init 与 init kthreadd",
+    "paths": [
+      "init/main.c",
+      "kernel/kthread.c",
+      "kernel/sched/idle.c"
+    ],
+    "symbols": [
+      "rest_init",
+      "kernel_init",
+      "kthreadd",
+      "cpu_startup_entry"
+    ]
+  },
+  "25": {
+    "title": "内核线程创建与首次运行",
+    "paths": [
+      "kernel/fork.c",
+      "arch/arm64/kernel/process.c",
+      "arch/arm64/kernel/entry.S"
+    ],
+    "symbols": [
+      "kernel_thread",
+      "kernel_clone",
+      "copy_process",
+      "copy_thread",
+      "ret_from_fork"
+    ]
+  },
+  "26": {
+    "title": "kernel_init_freeable 与 initcall",
+    "paths": [
+      "include/linux/init.h",
+      "init/main.c",
+      "drivers/base/init.c",
+      "drivers/base/dd.c"
+    ],
+    "symbols": [
+      "kernel_init_freeable",
+      "do_initcalls",
+      "do_basic_setup",
+      "__define_initcall"
+    ]
+  },
+  "27": {
+    "title": "VFS 与最初的根文件系统",
+    "paths": [
+      "fs/namespace.c",
+      "fs/super.c",
+      "fs/namei.c",
+      "init/do_mounts.c"
+    ],
+    "symbols": [
+      "mnt_init",
+      "init_mount_tree",
+      "init_rootfs"
+    ]
+  },
+  "28": {
+    "title": "initramfs initrd 与真实根文件系统",
+    "paths": [
+      "init/initramfs.c",
+      "init/do_mounts.c",
+      "init/main.c"
+    ],
+    "symbols": [
+      "populate_rootfs",
+      "prepare_namespace",
+      "ramdisk_execute_command"
+    ]
+  },
+  "29": {
+    "title": "PID 1 执行用户程序",
+    "paths": [
+      "init/main.c",
+      "fs/exec.c"
+    ],
+    "symbols": [
+      "run_init_process",
+      "kernel_execve",
+      "bprm_execve",
+      "exec_binprm"
+    ]
+  },
+  "30": {
+    "title": "ELF 加载与第一次进入 EL0",
+    "paths": [
+      "fs/binfmt_elf.c",
+      "arch/arm64/include/asm/processor.h",
+      "arch/arm64/kernel/entry.S"
+    ],
+    "symbols": [
+      "load_elf_binary",
+      "create_elf_tables",
+      "start_thread",
+      "ret_to_user"
+    ]
+  },
+  "31": {
+    "title": "编写最小 init 并启动 Shell",
+    "paths": [
+      "init/main.c",
+      "fs/binfmt_elf.c",
+      "Documentation/admin-guide/init.rst"
+    ],
+    "symbols": [
+      "run_init_process",
+      "load_elf_binary"
+    ]
+  },
+  "32": {
+    "title": "完整启动链与故障定位",
+    "paths": [
+      "arch/arm64/kernel/head.S",
+      "init/main.c",
+      "fs/exec.c"
+    ],
+    "symbols": [
+      "primary_entry",
+      "start_kernel",
+      "kernel_init",
+      "kernel_execve"
+    ]
+  }
+}

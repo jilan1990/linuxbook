@@ -1,0 +1,22 @@
+digraph G {
+graph [rankdir=TB,bgcolor="white",pad="0.35",nodesep="0.35",ranksep="0.48",splines=polyline,dpi=140,fontname="Noto Sans CJK SC",fontsize=20,labelloc=t];
+node [shape=box,style="rounded,filled",fillcolor="#EDF4FB",color="#A9BDD0",fontname="Noto Sans CJK SC",fontsize=16,fontcolor="#17334D",margin="0.19,0.13"];
+edge [color="#486B8A",fontname="Noto Sans CJK SC",fontsize=12,fontcolor="#38566F",arrowsize=0.75];
+label="第 23 章  主 CPU 与次级 CPU 的启动交接";
+"main" [label="主 CPU\n准备目标 idle 栈与启动数据",fillcolor="#EDF4FB"];
+"ops" [label="cpu_operations\n选择平台启动方法",fillcolor="#EDF4FB"];
+"psci" [label="本书 QEMU 使用 PSCI\n请求 CPU_ON",fillcolor="#EDF4FB"];
+"entry" [label="次级物理入口\nsecondary_entry 等",fillcolor="#EDF4FB"];
+"mmu" [label="次级 CPU 本地设置\n页表采用与栈安装",fillcolor="#EDF4FB"];
+"secondary" [label="secondary_start_kernel\n每 CPU 初始化与检查",fillcolor="#EDF4FB"];
+"online" [label="发布 online 状态\n进入调度与 idle",fillcolor="#E7F5EF"];
+"main"->"ops" [label="启动请求"];
+"ops"->"psci" [label="平台方法"];
+"psci"->"entry" [label="固件或模拟器交接"];
+"entry"->"mmu" [label="汇编准备"];
+"mmu"->"secondary" [label="进入 C"];
+"secondary"->"online" [label="完成就绪条件"];
+"online"->"main" [label="就绪反馈"];
+note [shape=note,fillcolor="#F2F4F6",fontsize=13,label="次级 CPU 不重新运行全局 start_kernel。"];
+"online"->note [style=invis];
+}
